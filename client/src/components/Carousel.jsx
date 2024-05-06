@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { ChevronLeft, ChevronRight } from 'react-feather'
 import Button from './Button'
+import { useNavigate } from "react-router-dom"
 
 export default function Carousel({slides}) {
+	const navigate = useNavigate()
 	const [currentSlide, setCurrentSlide] = useState(0)
 	
 	const nextSlide = () => setSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1)
@@ -42,7 +44,7 @@ export default function Carousel({slides}) {
             )}>
             	<h2 className="text-4xl sm:text-6xl font-bold mb-10">{slide.title}</h2>
             	<p className="text-xl mb-10">{slide.desc}</p>
-            	<Button className="text-xl w-1/2" light>Shop now</Button>
+            	<Button onClick={() => navigate("/products")} className="text-xl w-1/2" light>Shop now</Button>
             </div>
 					</li>
 				))}
