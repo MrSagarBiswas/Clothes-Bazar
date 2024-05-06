@@ -153,8 +153,16 @@ async function fetchProducts(category, newArrivals=false) {
   const resp = await fetch(API_URL+"/products?"+query)
   return await resp.json()
 }
+
 async function fetchProduct(id) {
   const resp = await fetch(API_URL+"/products/"+id)
+  return await resp.json()
+}
+
+async function deleteProduct(id) {
+  const resp = await fetch(API_URL+"/products/"+id, {
+    method: 'DELETE',
+  })
   return await resp.json()
 }
 
@@ -179,8 +187,21 @@ async function createOrder(products, amount, address) {
     body: JSON.stringify({ 
       products: products.map(p => ({productID: p.id, quantity: p.quantity})), 
       amount, 
-      address 
+      address,
     }),
+  })
+  return await resp.json()
+}
+
+// update order status
+async function updateStatus(id, status) {
+  const resp = await fetch(API_URL+"/orders/"+id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": getAccessToken(),
+    },
+    body: JSON.stringify({status}),
   })
   return await resp.json()
 }
@@ -195,12 +216,22 @@ async function fetchAllOrders() {
   return await resp.json()
 }
 
+async function CustomerOrders() {
+  const resp = await fetch(API_URL+"/orders/")
+  return await resp.json()
+}
+
 async function fetchOrderDetails(orderID) {
   const resp = await fetch(API_URL+"/orders/"+orderID, {
     headers: {
       "x-access-token": getAccessToken(),
     }
   })
+  return await resp.json()
+}
+
+async function OrderDetailsByAdmin(orderID) {
+  const resp = await fetch(API_URL+"/orders/admin/"+orderID)
   return await resp.json()
 }
 
@@ -223,4 +254,8 @@ export default {
   createOrder,
   fetchAllOrders,
   fetchOrderDetails,
+  CustomerOrders,
+  OrderDetailsByAdmin,
+  deleteProduct,
+  updateStatus
 }

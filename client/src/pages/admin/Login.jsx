@@ -12,7 +12,8 @@ export default function AdminLogin() {
 	const handleLogin = async userData => {
 		console.log(userData)
 		if(userData.email=="admin@gmail.com" && userData.password=="admin"){
-			navigate("/AdminDashboard");
+			sessionStorage.setItem("isAdmin", "true");
+			navigate("/admin/dashboard");
 			return {status: "ok", message: "Admin Verification Successful"}
 		} else {
 			return {status: "error", message: "Error! incorrect credientials"}

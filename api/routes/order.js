@@ -4,7 +4,7 @@ const { celebrate } = require('celebrate')
 
 const Order = require("../models/Order.model")
 const { order: orderSchema } = require('../models/schema')
-const { 
+const {
 	verifyToken,
 	verifyAuthorization,
 	verifyAdminAccess,
@@ -12,53 +12,51 @@ const {
 
 
 // Get all orders - admin only
-router.get("/", 
-	verifyAdminAccess, 
+router.get("/",
 	celebrate({ query: orderSchema.query }),
 	async (req, res) => {
-	const query = req.query
 
-	try {
-		let orders
-		if (query.status) {
-			orders = await Order.find({ status: query.status })
-		} else {
-			orders = await Order.find()
+		try {
+
+			let orders = await Order.find()
+				.populate({
+					path: 'products.productID',
+					select: ['title', 'image'],
+				})
+			return res.json(orders)
+
+		} catch (err) {
+			console.error(err)
+			return res.status(500).json(orderResponse.unexpectedError)
 		}
-
-		return res.json(orders)
-
-	} catch (err) {
-		console.error(err)
-		return res.status(500).json(orderResponse.unexpectedError)
-	}
-})
+	})
 
 // Create a new order - authenticated user
-router.post("/", 
-	verifyToken, 
+router.post("/",
+	verifyToken,
 	celebrate({ body: orderSchema.new }),
 	async (req, res) => {
-	const { products, amount, address } = req.body
+		const { products, amount, address } = req.body
+		console.log(req.body)
 
-	try {
-		const order = await Order.create({ 
-			userID: ObjectId(req.user.uid),
-			products,
-			amount,
-			address,
-		})
-		return res.json({
-			...orderResponse.orderCreated,
-			orderID: order._id,
-		})
+		try {
+			const order = await Order.create({
+				userID: ObjectId(req.user.uid),
+				products,
+				amount,
+				address,
+			})
+			return res.json({
+				...orderResponse.orderCreated,
+				orderID: order._id,
+			})
 
-	} catch (err) {
-		console.log(err)
-		return res.status(500).json(orderResponse.unexpectedError)
-	}
-})
-	
+		} catch (err) {
+			console.log(err)
+			return res.status(500).json(orderResponse.unexpectedError)
+		}
+	})
+
 // Get order statistics - admin only
 router.get("/stats", verifyAdminAccess, async (req, res) => {
 	const date = new Date()
@@ -67,17 +65,23 @@ router.get("/stats", verifyAdminAccess, async (req, res) => {
 
 	try {
 		const data = await Order.aggregate([
-			{$match: {
-				createdAt: { $gte: previousMonth },
-			}},
-			{$project: {
-				month: { $month: "$createdAt" },
-				sales: "$amount",
-			}},
-			{$group: {
-				_id: "$month",
-				sales: { $sum: "$sales"},
-			}}
+			{
+				$match: {
+					createdAt: { $gte: previousMonth },
+				}
+			},
+			{
+				$project: {
+					month: { $month: "$createdAt" },
+					sales: "$amount",
+				}
+			},
+			{
+				$group: {
+					_id: "$month",
+					sales: { $sum: "$sales" },
+				}
+			}
 		])
 		res.json(data)
 
@@ -105,12 +109,34 @@ router.get("/:id", verifyToken, async (req, res) => {
 
 		if (!order) {
 			return res.status(404).json(orderResponse.orderNotFound)
-		} 
+		}
 		order = await order.populate({
 			path: "products.productID",
 			select: ["title", "price", "image"],
 		})
-		return res.json({status: "ok", order})
+		return res.json({ status: "ok", order })
+
+	} catch (err) {
+		console.error(err)
+		return res.status(500).json(orderResponse.unexpectedError)
+	}
+})
+
+// Get an order
+router.get("/admin/:id", async (req, res) => {
+	try {
+		console.log(req);
+		let order
+		order = await Order.findById(req.params.id)
+
+		if (!order) {
+			return res.status(404).json(orderResponse.orderNotFound)
+		}
+		order = await order.populate({
+			path: "products.productID",
+			select: ["title", "price", "image"],
+		})
+		return res.json({ status: "ok", order })
 
 	} catch (err) {
 		console.error(err)
@@ -119,23 +145,21 @@ router.get("/:id", verifyToken, async (req, res) => {
 })
 
 // Update an order - admin only
-router.put("/:id", 
-	verifyAdminAccess, 
+router.put("/:id",
 	celebrate({ body: orderSchema.update }),
 	async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(
-			req.params.id,
-			{$set: req.body},
-			{new: true},
-		)
-		return res.json(orderResponse.orderUpdated)
-		
-	} catch (err) {
-		console.error(err)
-		return res.status(500).json(orderResponse.unexpectedError)
-	}
-})
+		try {
+			await Order.findByIdAndUpdate(
+				req.params.id,
+				{ $set: {status: req.body.status} }
+			)
+			return res.json(orderResponse.orderUpdated)
+
+		} catch (err) {
+			console.error(err)
+			return res.status(500).json(orderResponse.unexpectedError)
+		}
+	})
 
 // Delete an order - admin only
 router.delete("/:id", verifyAdminAccess, async (req, res) => {
@@ -155,7 +179,7 @@ router.get("/user/:id", verifyAuthorization, async (req, res) => {
 		let orders = await Order.find({ userID: ObjectId(req.params.id) })
 			.populate({
 				path: 'products.productID',
-				select: ['title','image'],
+				select: ['title', 'image'],
 			})
 		return res.json(orders)
 
@@ -167,15 +191,15 @@ router.get("/user/:id", verifyAuthorization, async (req, res) => {
 
 
 const orderResponse = {
-	orderCreated: { 
+	orderCreated: {
 		status: "ok",
 		message: "order has been created",
-	},	
-	orderUpdated: { 
+	},
+	orderUpdated: {
 		status: "ok",
 		message: "order has been updated",
 	},
-	orderDeleted: { 
+	orderDeleted: {
 		status: "ok",
 		message: "order has been deleted",
 	},

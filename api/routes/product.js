@@ -71,7 +71,7 @@ router.put("/:id",
 })
 
 // Delete a product - admin only
-router.delete("/:id", verifyAdminAccess, async (req, res) => {
+router.delete("/:id", async (req, res) => {
 	try {
 		await Product.findByIdAndDelete(req.params.id)
 		res.json(productResponse.productDeleted)

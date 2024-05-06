@@ -5,8 +5,6 @@ import ScrollToTop from "@/ScrollToTop"
 import HomePage from "@/pages/HomePage"
 import LoginPage from "@/pages/LoginPage"
 import RegisterPage from "@/pages/RegisterPage"
-import AdminLogin from "@/pages/AdminLogin"
-import AdminDashboard from "@/pages/AdminDashboard"
 import NotFoundPage from "@/pages/404Page"
 import ProductsPage from "@/pages/ProductsPage"
 import ProductDetailsPage from "@/pages/ProductDetailsPage"
@@ -19,13 +17,18 @@ import cartReducer, { initialCartState } from '@/reducers/cartReducer'
 import useReducerWithLocalStorage from '@/hooks/useReducerWithLocalStorage'
 import UserLayout from './layouts/UserLayout'
 
+import AdminLogin from "@/pages/admin/Login"
+import AdminDashboard from "@/pages/admin/Dashboard"
+import AdminOrderDetails from "@/pages/admin/OrderDetails"
+import AdminOrdersPage from "@/pages/admin/OrdersPage"
+
 export const UserContext = createContext()
 export const CartContext = createContext()
 
 export default function App() {
   const [user, setUser] = useState(null)
   const [cart, cartDispatch] = useReducerWithLocalStorage(cartReducer, initialCartState, "cart")
-  
+
   useEffect(() => {
     (async () => {
       const resp = await api.fetchUserDetails()
@@ -42,44 +45,51 @@ export default function App() {
       const resp = await api.getUserCart()
       console.log(resp)
       if (resp.products) {
-        cartDispatch({type: "SET_PRODUCTS", payload: resp.products})
+        cartDispatch({ type: "SET_PRODUCTS", payload: resp.products })
       }
     })()
   }, [user])
 
   return (
-    <BrowserRouter>      
-      <CartContext.Provider value={{cart, cartDispatch}}>
-      <UserContext.Provider value={{user, setUser}}>
-        <ScrollToTop />
-        
-        <Routes>
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="cart" element={<CartPage />} />
+    <BrowserRouter>
+      <CartContext.Provider value={{ cart, cartDispatch }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <ScrollToTop />
 
-            <Route path="login" element={user ? <Navigate replace to="/" /> : <LoginPage />} />
-            <Route path="register" element={user ? <Navigate replace to="/" /> : <RegisterPage />} />
-            <Route path="admin" element={user ? <Navigate replace to="/" /> : <AdminLogin />} />
-            <Route path="AdminDashboard" element={user ? <Navigate replace to="/" /> : <AdminDashboard />} />
-            <Route path="account" element={user ? <AccountPage /> : <Navigate replace to="/login" />} />
-            <Route path="account" element={user ? <AccountPage /> : <Navigate replace to="/login" />} />
+          <Routes>
+            <Route path="/" element={<UserLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="cart" element={<CartPage />} />
 
-            <Route path="products">
-              <Route index element={<ProductsPage />} />
-              <Route path=":id" element={<ProductDetailsPage />} />
+              <Route path="login" element={user ? <Navigate replace to="/" /> : <LoginPage />} />
+              <Route path="register" element={user ? <Navigate replace to="/" /> : <RegisterPage />} />
+
+
+              <Route path="admin">
+                <Route index element={<AdminLogin />} />
+                <Route path="dashboard" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminDashboard /> : <Navigate replace to="/login" />} />
+              <Route path="orders" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminOrdersPage /> : <Navigate replace to="/login" />} />
+                <Route path=":id" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminOrderDetails /> : <Navigate replace to="/login" />} />
+              </Route>
+
+              <Route path="account" element={user ? <AccountPage /> : <Navigate replace to="/login" />} />
+              <Route path="account" element={user ? <AccountPage /> : <Navigate replace to="/login" />} />
+
+              <Route path="products">
+                <Route index element={<ProductsPage />} />
+                <Route path=":id" element={<ProductDetailsPage />} />
+              </Route>
+
+              <Route path="orders">
+                <Route index element={user ? <OrdersPage /> : <Navigate replace to="/login" />} />
+                <Route path=":id" element={user ? <OrderDetailsPage /> : <Navigate replace to="/login" />} />
+              </Route>
             </Route>
-            
-            <Route path="orders">
-              <Route index element={user ? <OrdersPage /> : <Navigate replace to="/login" />} />
-              <Route path=":id" element={user ? <OrderDetailsPage /> : <Navigate replace to="/login" />} />
-            </Route>
-          </Route>
-            
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
 
-      </UserContext.Provider>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+
+        </UserContext.Provider>
       </CartContext.Provider>
     </BrowserRouter>
   );

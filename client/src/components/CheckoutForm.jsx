@@ -7,10 +7,11 @@ import {
 import api from '../api'
 import Button from './Button'
 import Loader from "./Loader"
-import { CheckCircle, ChevronRight, CreditCard, X } from 'react-feather'
+import { CheckCircle, ChevronRight, CreditCard, X, AtSign, Phone } from 'react-feather'
 import { Link } from 'react-router-dom'
+import Input from "@/components/Input"
 
-export default function CheckoutForm({onCancel,onSuccess}) {
+export default function CheckoutForm({ onCancel, onSuccess }) {
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState(null)
   const [processing, setProcessing] = useState('')
@@ -19,6 +20,9 @@ export default function CheckoutForm({onCancel,onSuccess}) {
   const [orderDetails, setOrderDetails] = useState({})
   const stripe = useStripe()
   const elements = useElements()
+	const [address, setAddress] = useState("")
+	const [contact, setContact] = useState("")
+
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -60,20 +64,12 @@ export default function CheckoutForm({onCancel,onSuccess}) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setProcessing(true)
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement)
-      }
-    })
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
-      setProcessing(false)
-    } else {
-      setError(null)
-      setProcessing(false)
-      setSucceeded(true)
-      onSuccess()
-    }
+    setError(null)
+    setProcessing(false)
+    localStorage.setItem("address", address)
+    localStorage.setItem("contact", contact)
+    setSucceeded(true)
+    onSuccess()
   }
 
   if (succeeded) {
@@ -87,7 +83,7 @@ export default function CheckoutForm({onCancel,onSuccess}) {
             <ChevronRight className='ml-2' />
           </Button>
         </Link>
-				<Button secondary onClick={onCancel}>Close</Button>
+        <Button secondary onClick={onCancel}>Close</Button>
       </div>
     )
   }
@@ -95,7 +91,7 @@ export default function CheckoutForm({onCancel,onSuccess}) {
   return (
     <div>
       <section className='mb-6'>
-        {orderDetails?.amount && 
+        {orderDetails?.amount &&
           <div className='flex justify-between text-lg mt-2'>
             <h4 className='text-lg mb-2'>Final Order</h4>
             <span className='font-bold text-xl'>₹{orderDetails.amount}</span>
@@ -104,11 +100,11 @@ export default function CheckoutForm({onCancel,onSuccess}) {
         {orderDetails?.products?.length ?
           <ul>
             {orderDetails.products.map(product => (
-              <CheckoutItem 
+              <CheckoutItem
                 key={product.productID._id}
-                title={product.productID.title} 
-                price={product.productID.price} 
-                quantity={product.quantity} 
+                title={product.productID.title}
+                price={product.productID.price}
+                quantity={product.quantity}
               />
             ))}
           </ul>
@@ -124,22 +120,32 @@ export default function CheckoutForm({onCancel,onSuccess}) {
             {error}
           </div>
         )}
-        <Button className="w-full mt-6" disabled={processing || disabled || succeeded}>
-          {processing 
-            ? <Loader/>
+        <Input 
+				value={address}
+				icon={<AtSign width={20} height={20} />}
+				onChange={e => setAddress(e.target.value)}
+				type="text" placeholder="Full Address" required />
+        <Input 
+				value={contact}
+				icon={<Phone width={20} height={20} />}
+				onChange={e => setContact(e.target.value)}
+				type="number" placeholder="Phone Number" required />
+        <Button className="w-full mt-6" disabled={processing || succeeded}>
+          {processing
+            ? <Loader />
             : <>
-              <CreditCard className='mr-2 opacity-70' /> 
+              <CreditCard className='mr-2 opacity-70' />
               <span>Confirm Order</span>
             </>
           }
         </Button>
-				<Button className="w-full" secondary onClick={onCancel}>Cancel</Button>
+        <Button className="w-full" secondary onClick={onCancel}>Cancel</Button>
       </form>
     </div>
   );
 }
 
-function CheckoutItem({title, price, quantity}) {
+function CheckoutItem({ title, price, quantity }) {
   return (
     <li className='flex justify-between'>
       <p>{title}</p>
@@ -150,7 +156,7 @@ function CheckoutItem({title, price, quantity}) {
             {quantity}
           </span>
         }
-        <span className='text-lg font-light'>₹{quantity*price}</span>
+        <span className='text-lg font-light'>₹{quantity * price}</span>
       </div>
     </li>
   )

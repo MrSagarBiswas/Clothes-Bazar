@@ -26,7 +26,8 @@ export default function CartPage() {
 	}
 
 	const handleCreateOrder = async () => {
-		const resp = await api.createOrder(cart.products, cart.total, "abc street, abc city, abc state, abc zip")
+		const resp = await api.createOrder(cart.products, cart.total, localStorage.getItem("address") + ", Ph: " + localStorage.getItem("contact"))
+		console.log(localStorage.getItem("contact"))
 		if (resp.status === "ok") {
 			console.log(resp.orderID)
 			api.clearCart()
