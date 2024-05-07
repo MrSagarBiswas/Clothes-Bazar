@@ -15,6 +15,9 @@ export default function OrdersPage() {
 
 	useEffect(() => {
 		(async () => {
+			if (!sessionStorage.getItem("isAdmin")) {
+				navigate("/admin");
+			}
 			const resp = await api.CustomerOrders()
 			if (resp.length) {
 				setOrders(resp)

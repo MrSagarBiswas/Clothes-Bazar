@@ -12,7 +12,7 @@ export default function AdminLogin() {
 	const handleLogin = async userData => {
 		console.log(userData)
 		if(userData.email=="admin@gmail.com" && userData.password=="admin"){
-			sessionStorage.setItem("isAdmin", "true");
+			sessionStorage.setItem("isAdmin", true);
 			navigate("/admin/dashboard");
 			return {status: "ok", message: "Admin Verification Successful"}
 		} else {

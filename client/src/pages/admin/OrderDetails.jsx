@@ -25,6 +25,9 @@ export default function OrderDetailsPage() {
 
 	useEffect(() => {
 		(async () => {
+			if (!sessionStorage.getItem("isAdmin")) {
+				navigate("/admin");
+			}
 			const resp = await api.OrderDetailsByAdmin(id)
 			if (resp.status !== "ok") {
 				navigate("/404")

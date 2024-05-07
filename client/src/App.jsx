@@ -67,9 +67,9 @@ export default function App() {
 
               <Route path="admin">
                 <Route index element={<AdminLogin />} />
-                <Route path="dashboard" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminDashboard /> : <Navigate replace to="/login" />} />
-              <Route path="orders" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminOrdersPage /> : <Navigate replace to="/login" />} />
-                <Route path=":id" element={sessionStorage.getItem("isAdmin") == "true" ? <AdminOrderDetails /> : <Navigate replace to="/login" />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="orders" element={<AdminOrdersPage />} />
+                <Route path=":id" element={<AdminOrderDetails />} />
               </Route>
 
               <Route path="account" element={user ? <AccountPage /> : <Navigate replace to="/login" />} />
