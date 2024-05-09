@@ -11,20 +11,23 @@ import api from "@/api"
 import useClickOutside from '@/hooks/useClickOutside'
 
 export default function Navbar() {
-	const {user, setUser} = useContext(UserContext)
-	const {cart, cartDispatch} = useContext(CartContext)
+	const { user, setUser } = useContext(UserContext)
+	const { cart, cartDispatch } = useContext(CartContext)
 	const [showMenu, setShowMenu] = useState(false)
 	const navbarRef = useClickOutside(() => setShowMenu(false))
 
 	return (
 		<nav className={clsx(
 			"w-full flex flex-wrap justify-between items-center",
-			"sticky top-0 z-40 py-3 px-4",
+			"sticky top-0 z-40 py-3 ",
 			"bg-gray-200/90 border-b border-gray-300",
 			"backdrop-filter backdrop-blur-lg shadow-sm",
 			"md:(py-1)"
 		)} ref={navbarRef}>
 			<div className="flex justify-between items-center md:mx-0">
+				<div className="navbar-logo px-2">
+					<img src="CLothesBazarLogo.png" style={{ height: '46px', width: 'auto' }} alt="Logo" />
+				</div>
 				<Link to="/">
 					<h3 className="text-medium text-2xl">Clothes Bazar</h3>
 				</Link>
@@ -40,20 +43,20 @@ export default function Navbar() {
 						: null
 					}
 				</Link>
-				{user && 
-					<UserDropDown 
-						user={user} 
+				{user &&
+					<UserDropDown
+						user={user}
 						onLogout={() => {
 							api.logoutUser()
 							setUser(null)
-							cartDispatch({type: "RESET"})
-						}} 
+							cartDispatch({ type: "RESET" })
+						}}
 					/>
 				}
 				<button className="md:hidden flex items-center focus:outline-none">
-					{showMenu 
+					{showMenu
 						? <X width={24} height={24} onClick={() => setShowMenu(false)} />
-						:	<Menu width={24} height={24} onClick={() => setShowMenu(true)} />
+						: <Menu width={24} height={24} onClick={() => setShowMenu(true)} />
 					}
 				</button>
 			</div>
@@ -73,34 +76,34 @@ export default function Navbar() {
 					<NavLink to="/products">All Products</NavLink>
 				</ul>
 				<div className="flex items-center order-1 md:order-2">
-					<Input 
-						className="md:max-w-min bg-opacity-40" 
-						icon={<Search />} 
-						placeholder="Search..." 
+					<Input
+						className="md:max-w-min bg-opacity-40"
+						icon={<Search />}
+						placeholder="Search..."
 					/>
 				</div>
-			{!user && (
-				<ul className={clsx(
-					"flex flex-col order-3",
-					showMenu && "mt-4",
-					"md:(flex-row text-base mt-0 space-x-2)"
-				)}>
-					<li>
-						<Link to="/login">
-							<Button secondary className="w-full md:w-auto">
-								<LogIn width={20} height={20} className="mr-2" />Login
-							</Button>
-						</Link>
-					</li>
-					<li>
-						<Link to="/register">
-							<Button className="w-full md:w-auto">
-								<User width={20} height={20} className="mr-2" />Register
-							</Button>
-						</Link>
-					</li>
-				</ul>
-			)}
+				{!user && (
+					<ul className={clsx(
+						"flex flex-col order-3",
+						showMenu && "mt-4",
+						"md:(flex-row text-base mt-0 space-x-2)"
+					)}>
+						<li>
+							<Link to="/login">
+								<Button secondary className="w-full md:w-auto">
+									<LogIn width={20} height={20} className="mr-2" />Login
+								</Button>
+							</Link>
+						</li>
+						<li>
+							<Link to="/register">
+								<Button className="w-full md:w-auto">
+									<User width={20} height={20} className="mr-2" />Register
+								</Button>
+							</Link>
+						</li>
+					</ul>
+				)}
 			</div>
 		</nav>
 	)
