@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, GitHub, Globe } from "react-feather"
+import { Linkedin, Instagram, Twitter, MapPin, Phone, Mail, GitHub, Globe } from "react-feather"
 
 export default function Footer() {
 	return (
@@ -11,19 +11,16 @@ export default function Footer() {
 				<p className="text-justify text-gray-700">My name is Sagar Biswas. I'm a B.Tech (CSE) Final year student of J.K. Institute of Applied Physics & Technology. This Fashion E-Commerce Store is my final year academic Project work under the supervision of Dr. Lucky Agarwal (Asst. Professor).</p>
 				<ul className="flex mt-6 justify-center md:justify-start space-x-4">
 					<li>
-						<Link to="#"><Facebook /></Link>
+						<Link to="https://www.linkedin.com/in/mrsagarbiswas/" target="_blank"><Linkedin /></Link>
 					</li>				
 					<li>
-						<Link to="#"><Instagram /></Link>
+						<Link to="https://www.instagram.com/mrsagarbiswas/" target="_blank"><Instagram /></Link>
 					</li>				
-					<li>
-						<Link to="#"><Twitter /></Link>
-					</li>
 					<li>
 						<a href="https://github.com/MrSagarBiswas" target='_blank'><GitHub /></a>
 					</li>
 					<li>
-						<a href="#"><Globe /></a>
+						<a href="https://www.google.com/search?q=MrSagarBiswas&rlz=1C1CHBF_enIN970IN970&oq=MrSagarBiswas&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgoIARAAGIAEGKIEMgYIAhBFGDwyBggDEEUYPDIGCAQQRRg80gEINDA4MWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8#ip=1" target="_blank"><Globe /></a>
 					</li>
 				</ul>
 			</div>			
@@ -75,7 +72,7 @@ export default function Footer() {
 					</li>
 					<li className="flex items-center">
 						<GitHub className="w-5 h-5 mr-2" />
-						<a href="https://github.com/MrSagarBiswas/Fashion-Store" target="_blank">
+						<a href="https://github.com/MrSagarBiswas/" target="_blank">
 							Shoping Place
 						</a>
 						<span className='mx-1'>built by</span>

@@ -26,7 +26,7 @@ export default function Navbar() {
 		)} ref={navbarRef}>
 			<div className="flex justify-between items-center md:mx-0">
 				<Link to="/">
-					<h3 className="text-medium text-2xl">Fashion E-Commerce Store</h3>
+					<h3 className="text-medium text-2xl">Clothes Bazar</h3>
 				</Link>
 			</div>
 
