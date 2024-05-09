@@ -166,6 +166,13 @@ async function deleteProduct(id) {
   return await resp.json()
 }
 
+async function deleteOrdersByProductID(id) {
+  const resp = await fetch(API_URL+"/orders/product/"+id, {
+    method: 'DELETE',
+  })
+  return await resp.json()
+}
+
 async function proceedCheckout() {
   const resp = await fetch(API_URL+"/checkout/payment", {
     headers: {
@@ -257,5 +264,6 @@ export default {
   CustomerOrders,
   OrderDetailsByAdmin,
   deleteProduct,
-  updateStatus
+  updateStatus,
+  deleteOrdersByProductID
 }

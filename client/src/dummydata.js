@@ -1,31 +1,44 @@
 export const sliderItems = [
   {
     id: 1,
-    image: "https://images.pexels.com/photos/7973302/pexels-photo-7973302.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-    title: "SUMMER SALE",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    image: "https://wallpapercave.com/wp/wp6403714.jpg",
+    title: "TRADITIONAL SAREES",
+    desc: "Wrap Yourself in Timeless Elegance: Embrace the Beauty of Indian Tradition with Our Sarees.",
     bg: "f5fafd",
   },
   {
     id: 2,
-    image: "https://images.pexels.com/photos/1126993/pexels-photo-1126993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "AUTUMN COLLECTION",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    image: "https://wallpapercave.com/wp/wp6389928.jpg",
+    title: "TRADITIONAL LEHENGAS",
+    desc: "Elegance woven in every thread: Embrace timeless grace with our Indian Traditional Lehengas.",
     bg: "fcf1ed",
   },
   {
     id: 3,
-    image: "https://images.pexels.com/photos/999267/pexels-photo-999267.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "FORMAL WEAR",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    image: "https://wallpapercave.com/wp/wp8796371.jpg",
+    title: "PARTY WEAR",
+    desc: "Dazzle and Dance: Unleash Your Style with Party Wear Perfection!",
     bg: "fbf0f4",
   },
   {
     id: 4,
-    image: "https://images.pexels.com/photos/1158670/pexels-photo-1158670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "TOO ABSTRACT",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    image: "https://wallpapercave.com/wp/wp10066858.jpg",
+    title: "CULTURAL DRESS",
+    desc: "WEAR: Where Culture Meets Style",
     bg: "fbf0f4",
+  }, 
+  {
+    id: 5,
+    image: "https://wallpapercave.com/wp/wp8796389.jpg",
+    title: "WEEDING DRESSES",
+    desc: "Where dreams meet lace and love finds its perfect fit.",
+    bg: "fbf0f4",
+  },
+  {
+    id: 6,
+    image: "https://r4.wallpaperflare.com/wallpaper/463/259/635/ethnic-wear-shriya-saran-traditional-actress-wallpaper-28bc190f33e52e76e122965bd91aba53.jpg",
+    title: "BEAUTIFUL & COLOURFULL",
+    desc: "Dressed in Dreams: Where Beauty Meets Color!",
   },  
 
 ]
@@ -33,23 +46,23 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    image: "https://images.pexels.com/photos/1852382/pexels-photo-1852382.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-    title: "SHIRT STYLE!",
+    image: "//www.allborrow.com/cdn/shop/files/superman.png?v=1712360591",
+    title: "KURTA PYJAMA",
   },
   {
     id: 2,
-    image: "https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-    title: "DENIMS",
+    image: "//www.allborrow.com/cdn/shop/files/BABYBLUE2.jpg?v=1683140383",
+    title: "ANARKALI SUIT",
   },
   {
     id: 3,
-    image: "https://images.pexels.com/photos/449977/pexels-photo-449977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LEATHER JACKETS",
+    image: "//www.allborrow.com/cdn/shop/files/Nolitasaree2.png?v=1712086102",
+    title: "SAREE",
   },
   {
     id: 4,
-    image: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "HOODIES",
+    image: "//www.allborrow.com/cdn/shop/files/nightingalelehenga3.png?v=1710381590",
+    title: "LEHENGA",
   },
 ];
 
@@ -115,6 +128,6 @@ export const dummyOrders = [0,3,6].map(num => ({
   ...order,
   id: i,
   amount: order.products.reduce((sum, p) => sum + (p.product.price * p.quantity), 0),
-  address: "221b Baker St, London NW1 6XE, UK",
+  address: "Bongaon, West Bengal",
   status: dummyOrderStatus[Math.floor(Math.random() * dummyOrderStatus.length)],
 }))

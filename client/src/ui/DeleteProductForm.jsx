@@ -23,8 +23,10 @@ export default function AddProductForm({ onSubmit }) {
 	const handleSubmit = async e => {
 		e.preventDefault()
 		setLoading(true)
+		const delOrders = await api.deleteOrdersByProductID(id)
 		const resp = await api.deleteProduct(id)
 		const res = await api.fetchProducts("")
+		console.log(delOrders)
 		if (res.status !== "error") {
 			setProducts(res)
 		}

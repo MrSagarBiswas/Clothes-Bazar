@@ -6,8 +6,9 @@ export default function Footer() {
 	return (
 		<footer className="grid grid-cols-1 md:(grid-cols-3) border-t border-gray-300 bg-gray-200 px-4">
 			<div className="m-4 sm:m-6 flex-1">
-				<h2 className="text-4xl text-center md:text-left mb-4">BRAND</h2>
-				<p className="text-justify text-gray-700">Eiusmod duis reprehenderit quis cillum nisi anim consectetur occaecat cupidatat anim incididunt aliqua eiusmod ad consectetur in ut cupidatat proident dolore aute irure enim in in ut adipisicing in do est.</p>
+				<h2 className="text-4xl text-center md:text-left mb-4">University of Allahabad</h2>
+				<p className="text-justify text-gray-700">Hi👋</p>
+				<p className="text-justify text-gray-700">My name is Sagar Biswas. I'm a B.Tech (CSE) Final year student of J.K. Institute of Applied Physics & Technology. This Fashion E-Commerce Store is my final year academic Project work under the supervision of Dr. Lucky Agarwal (Asst. Professor).</p>
 				<ul className="flex mt-6 justify-center md:justify-start space-x-4">
 					<li>
 						<Link to="#"><Facebook /></Link>
@@ -19,7 +20,7 @@ export default function Footer() {
 						<Link to="#"><Twitter /></Link>
 					</li>
 					<li>
-						<a href="#"><GitHub /></a>
+						<a href="https://github.com/MrSagarBiswas" target='_blank'><GitHub /></a>
 					</li>
 					<li>
 						<a href="#"><Globe /></a>
@@ -84,7 +85,7 @@ export default function Footer() {
 					</li>
 				</ul>
 				<div className="mt-6">
-					<img className="mx-auto md:mx-0" src="https://i.ibb.co/Qfvn4z6/payment.png" alt="payment providers" />
+					Cash On Delivery (COD) Available
 				</div>
 			</div>
 		</footer>

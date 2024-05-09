@@ -162,6 +162,19 @@ router.put("/:id",
 	})
 
 // Delete an order - admin only
+router.delete("/product/:id", async (req, res) => {
+	try {
+		const result = await Order.deleteMany({ 'products.productID': ObjectId(req.params.id) });
+		console.log(`${result.deletedCount} orders deleted successfully.`)
+		res.json(orderResponse.orderDeleted)
+
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json(orderResponse.unexpectedError)
+	}
+})
+
+// Delete an order - admin only
 router.delete("/:id", verifyAdminAccess, async (req, res) => {
 	try {
 		await Order.findByIdAndDelete(req.params.id)
