@@ -26,7 +26,7 @@ export default function Navbar() {
 		)} ref={navbarRef}>
 			<div className="flex justify-between items-center md:mx-0">
 				<div className="navbar-logo px-2">
-					<img src="CLothesBazarLogo.png" style={{ height: '46px', width: 'auto' }} alt="Logo" />
+					<img src="../logo.png" style={{ height: '46px', width: 'auto' }} alt="Logo" />
 				</div>
 				<Link to="/">
 					<h3 className="text-medium text-2xl">Clothes Bazar</h3>
@@ -71,8 +71,8 @@ export default function Navbar() {
 					"mt-8 mb-2 text-xl space-y-1 divide-y-2 divide-gray-200",
 					"md:(flex-row text-base m-0 space-y-0 divide-y-0 divide-x)"
 				)} onClick={() => setShowMenu(false)}>
-					<NavLink to="/products?category=men">Men</NavLink>
-					<NavLink to="/products?category=women">Women</NavLink>
+					{/* <NavLink to="/products?category=men">Men</NavLink>
+					<NavLink to="/products?category=women">Women</NavLink> */}
 					<NavLink to="/products">All Products</NavLink>
 				</ul>
 				<div className="flex items-center order-1 md:order-2">

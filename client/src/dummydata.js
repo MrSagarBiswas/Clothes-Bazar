@@ -1,42 +1,42 @@
 export const sliderItems = [
   {
     id: 1,
-    image: "Fashion-1.jpg",
+    image: "../Fashion-1.jpg",
     title: "TRADITIONAL SAREES",
     desc: "Wrap Yourself in Timeless Elegance: Embrace the Beauty of Indian Tradition with Our Sarees.",
     bg: "f5fafd",
   },
   {
     id: 2,
-    image: "Fashion-2.jpg",
+    image: "../Fashion-2.jpg",
     title: "TRADITIONAL LEHENGAS",
     desc: "Elegance woven in every thread: Embrace timeless grace with our Indian Traditional Lehengas.",
     bg: "fcf1ed",
   },
   {
     id: 3,
-    image: "Fashion-3.jpg",
+    image: "../Fashion-3.jpg",
     title: "PARTY WEAR",
     desc: "Dazzle and Dance: Unleash Your Style with Party Wear Perfection!",
     bg: "fbf0f4",
   },
   {
     id: 4,
-    image: "Fashion-4.jpg",
+    image: "../Fashion-4.jpg",
     title: "CULTURAL DRESS",
     desc: "WEAR: Where Culture Meets Style",
     bg: "fbf0f4",
   }, 
   {
     id: 5,
-    image: "Fashion-5.jpg",
+    image: "../Fashion-5.jpg",
     title: "WEEDING DRESSES",
     desc: "Where dreams meet lace and love finds its perfect fit.",
     bg: "fbf0f4",
   },
   {
     id: 6,
-    image: "Fashion-6.jpg",
+    image: "../Fashion-6.jpg",
     title: "BEAUTIFUL & COLOURFULL",
     desc: "Dressed in Dreams: Where Beauty Meets Color!",
   },  
@@ -46,22 +46,22 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    image: "//www.allborrow.com/cdn/shop/files/superman.png?v=1712360591",
+    image: "//www.allborrow.com/cdn/shop/files/superman.png",
     title: "KURTA PYJAMA",
   },
   {
     id: 2,
-    image: "//www.allborrow.com/cdn/shop/files/BABYBLUE2.jpg?v=1683140383",
+    image: "//www.allborrow.com/cdn/shop/files/BABYBLUE2.jpg",
     title: "ANARKALI SUIT",
   },
   {
     id: 3,
-    image: "//www.allborrow.com/cdn/shop/files/Nolitasaree2.png?v=1712086102",
+    image: "//www.allborrow.com/cdn/shop/files/Nolitasaree2.png",
     title: "SAREE",
   },
   {
     id: 4,
-    image: "//www.allborrow.com/cdn/shop/files/nightingalelehenga3.png?v=1710381590",
+    image: "//www.allborrow.com/cdn/shop/files/nightingalelehenga3.png",
     title: "LEHENGA",
   },
 ];
